@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ quiet: true });
-const moment = require('moment-timezone');
 const { VALIDATION_ERRORS } = require("../constants/userConstants");
-const { addUser, getUserByEmail } = require("../services/usersService");
+const { addUser, getUserByEmail, updateUser } = require("../services/usersService");
 const { generateHash, validateHash } = require("../utils/bcryptUtils");
+const { omit } = require('lodash');
 
 const loginUser = async (req, res) => {
   try {
@@ -64,7 +64,47 @@ const registerUser = async (req, res) => {
   }
 }
 
+const getMyUser = async (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      data: req.user,
+    });
+  } catch (error) {
+    console.error("Error in UsersController.getMyUser - ", error);
+    res.status(400).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+}
+
+const updateMyUser = async (req, res) => {
+  try {
+    const { id: userId } = req.user;
+    const updatedUser = await updateUser(userId, req.body);
+    res.status(200).json({
+      success: true,
+      data: omit(updatedUser, ['password']),
+    });
+  } catch (error) {
+    console.error("Error in UsersController.updateMyUser - ", error);
+    if (error.code === '23505') {
+      res.status(400).json({
+      success: false,
+      message: error.detail,
+    });
+    }
+    res.status(400).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+}
+
 module.exports = {
   loginUser,
   registerUser,
+  getMyUser,
+  updateMyUser,
 }
