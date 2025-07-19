@@ -1,5 +1,5 @@
-const Joi = require('joi');
-const { importFields } = require('../utils/joiUtils');
+const Joi = require("joi");
+const { importFields } = require("../utils/joiUtils");
 
 // Define reusable validation rules
 const validationRules = {
@@ -12,15 +12,20 @@ const validationRules = {
 
 // Registration schema - all fields are required
 const registerUserSchema = Joi.object().keys({
-  ...importFields(validationRules, ['name', 'email', 'password'], true)
+  ...importFields(validationRules, ["name", "email", "password"]),
 });
 
 // Login schema - only email and password are required
 const loginUserSchema = Joi.object().keys({
-  ...importFields(validationRules, ['email', 'password'], true)
+  ...importFields(validationRules, ["email", "password"], ["name"]),
+});
+
+const updateUserSchema = Joi.object().keys({
+  ...importFields(validationRules, [], ["password"]),
 });
 
 module.exports = {
   registerUserSchema,
   loginUserSchema,
-}
+  updateUserSchema,
+};
