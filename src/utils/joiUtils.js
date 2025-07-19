@@ -1,7 +1,8 @@
-const importFields = (validationRules, requiredFields = [], includeRequiredOnly = false) =>
+const importFields = (validationRules, requiredFields = [], excludeFields = []) =>
   Object.entries(validationRules).reduce((acc, [key, value]) => {
+    if (excludeFields.includes(key)) return acc;
     if (requiredFields.includes(key)) acc[key] = value.required();
-    else if (!includeRequiredOnly) acc[key] = value;
+    else acc[key] = value;
     return acc;
   }, {});
 
