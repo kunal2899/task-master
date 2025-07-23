@@ -1,0 +1,55 @@
+const TEAM_USER_ROLE = {
+  OWNER: "owner",
+  ADMIN: "admin",
+  MEMBER: "member",
+  VIEWER: "viewer",
+};
+
+const TEAM_USER_STATUS = {
+  ACTIVE: "active",
+  PENDING: "pending",
+  REMOVED: "removed",
+  INACTIVE: "inactive",
+  SUSPENDED: "suspended",
+};
+
+const TEAM_USER_ACTION = {
+  CREATE: 'create',
+  READ: 'read',
+  UPDATE: 'update',
+  DELETE: 'delete',
+  ASSIGN: 'assign',
+  CREATE_TASK: 'create-task',
+  UPDATE_TASK: 'update-task',
+  ASSIGN_TASK: 'assign-task',
+  DELETE_TASK: 'delete-task',
+  VIEW_TASK: 'view-task',
+}
+
+const TEAM_USER_ACTION_ALLOWED = {
+  [TEAM_USER_ACTION.CREATE]: 0,
+  [TEAM_USER_ACTION.READ]: 1,
+  [TEAM_USER_ACTION.UPDATE]: 3,
+  [TEAM_USER_ACTION.DELETE]: 4,
+  [TEAM_USER_ACTION.ASSIGN]: 3,
+  [TEAM_USER_ACTION.CREATE_TASK]: 2,
+  [TEAM_USER_ACTION.UPDATE_TASK]: 2,
+  [TEAM_USER_ACTION.ASSIGN_TASK]: 2,
+  [TEAM_USER_ACTION.DELETE_TASK]: 2,
+  [TEAM_USER_ACTION.VIEW_TASK]: 1,
+};
+
+const TEAM_USER_ACCESS_LEVELS = {
+  [TEAM_USER_ROLE.OWNER]: 4,
+  [TEAM_USER_ROLE.ADMIN]: 3,
+  [TEAM_USER_ROLE.MEMBER]: 2,
+  [TEAM_USER_ROLE.VIEWER]: 1,
+};
+
+module.exports = {
+  TEAM_USER_ROLE,
+  TEAM_USER_STATUS,
+  TEAM_USER_ACTION,
+  TEAM_USER_ACTION_ALLOWED,
+  TEAM_USER_ACCESS_LEVELS,
+};

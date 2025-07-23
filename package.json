@@ -1,0 +1,33 @@
+{
+  "name": "task-master",
+  "version": "0.0.1",
+  "description": "A Collaborative Task Tracking System",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "migrate": "node db/migrations/migrate.js"
+  },
+  "author": "Kunal Jain",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kunal2899/task-master.git"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "bcrypt": "^6.0.0",
+    "bluebird": "^3.7.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "moment-timezone": "^0.6.0",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "engines": {
+    "node": ">= 18.0.0"
+  }
+}
