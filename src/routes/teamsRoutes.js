@@ -7,6 +7,7 @@ const {
   getTeam,
   assignUsersToTeam,
   updateTeamUser,
+  getAllTeamUsers,
 } = require("../controllers/teamsController");
 const { deleteTeam } = require("../services/teamsService");
 const validateCreateTeamInfo = require("../middlewares/validators/createTeamValidator");
@@ -14,11 +15,13 @@ const validateUpdateTeamInfo = require("../middlewares/validators/updateTeamVali
 const validateTeamInfo = require("../middlewares/validators/teamValidator");
 const validateAssignTeamUsers = require("../middlewares/validators/assignTeamUsersValidator");
 const validateTeamUserUpdateInfo = require("../middlewares/validators/validateTeamUserUpdateInfo");
+const tasksRouter = require('./tasksRoutes');
 const router = express.Router();
 
-router.use(express.json());
 router.use(isAuthenticated);
+router.use('/:teamId/:userId/tasks', tasksRouter);
 
+router.get("/:teamId/users", getAllTeamUsers);
 router.get("/:teamId", getTeam);
 router.get("/", getAllTeams);
 

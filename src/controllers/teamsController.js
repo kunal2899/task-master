@@ -28,6 +28,24 @@ const getTeam = async (req, res) => {
   }
 };
 
+const getAllTeamUsers = async (req, res) => {
+  try {
+    const { teamId } = req.params;
+    if (!teamId) throw new Error('Team id not provided');
+    const teamUsers = await teamUsersService.getAllTeamUsers(parseInt(teamId, 10));
+    res.status(200).json({
+      success: true,
+      data: teamUsers,
+    });
+  } catch (error) {
+    console.error("Error in TeamsController.getAllTeamUsers - ", error);
+    res.status(400).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+
 const getAllTeams = async (req, res) => {
   try {
     const filters = get(req, "body.filters", {});
@@ -235,4 +253,5 @@ module.exports = {
   deleteTeam,
   assignUsersToTeam,
   updateTeamUser,
+  getAllTeamUsers,
 };

@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const { importFields } = require("../utils/joiUtils");
+const { changePassword } = require("../controllers/usersController");
 
 // Define reusable validation rules
 const validationRules = {
@@ -24,8 +25,14 @@ const updateUserSchema = Joi.object().keys({
   ...importFields(validationRules, [], ["password"]),
 });
 
+const changePasswordPayloadSchema = Joi.object().keys({
+  existingPassword: validationRules.password.required(),
+  newPassword: validationRules.password.required(),
+});
+
 module.exports = {
   registerUserSchema,
   loginUserSchema,
   updateUserSchema,
+  changePasswordPayloadSchema,
 };

@@ -95,10 +95,50 @@ const getUserTeamsData = async (userId) => {
   }
 };
 
+const getTeamUser = async ({ teamId, userId, returnsIdOnly = false }) => {
+  try {
+    const query = `
+      SELECT
+        ${returnsIdOnly ? 'id' : '*'}
+      FROM 
+        team_users
+      WHERE 
+        user_id = $1
+        AND team_id = $2
+    `;
+    const { rows } = await pool.query(query, [userId, teamId]);
+    if (rows.length === 0) return null;
+    return returnsIdOnly ? rows[0].id : rows[0];
+  } catch (error) {
+    console.error("Error in TeamUsersService.getTeamUser - ", error);
+    throw error;
+  }
+};
+
+const getAllTeamUsers = async (teamId) => {
+try {
+    const query = `
+      SELECT
+        *
+      FROM 
+        team_users
+      WHERE
+        team_id = $1
+    `;
+    const { rows } = await pool.query(query, [teamId]);
+    return rows;
+  } catch (error) {
+    console.error("Error in TeamUsersService.getAllTeamUsers - ", error);
+    throw error;
+  }
+};
+
 module.exports = {
   createTeamUser,
   updateTeamUser,
   isAuthorised,
   removeTeamUsers,
   getUserTeamsData,
+  getTeamUser,
+  getAllTeamUsers,
 };

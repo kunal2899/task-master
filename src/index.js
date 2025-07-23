@@ -6,6 +6,7 @@ const teamRoutes = require('./routes/teamsRoutes');
 require('dotenv').config({ quiet: true });
 
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 // Connect to database
