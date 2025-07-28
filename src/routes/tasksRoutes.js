@@ -10,10 +10,15 @@ const validateCreateTask = require("../middlewares/validators/addTaskValidator")
 const validateTeamUser = require("../middlewares/validators/validateTeamUser");
 const validateAssignTask = require("../middlewares/validators/assignTaskValidator");
 const validateFilterTasks = require("../middlewares/validators/filterTasksValidator");
+const taskCommentsRouter = require("./taskCommentsRoutes");
+const taskAttachmentsRouter = require("./taskAttachmentsRoutes");
 
 const router = express.Router({ mergeParams: true });
 
 router.use(validateTeamUser);
+
+router.use("/:taskId/comments", taskCommentsRouter);
+router.use("/:taskId/attachments", taskAttachmentsRouter);
 
 router.post("/", validateCreateTask, addTask);
 router.get("/", validateFilterTasks, getAllTasks);

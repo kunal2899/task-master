@@ -13,7 +13,14 @@ const TASK_STATUS = {
   CLOSED: 'closed',
 };
 
+const TASK_ATTACHMENT_MEDIA_TYPE = {
+  IMAGE: 'image',
+  VIDEO: 'video',
+  DOCUMENT: 'document',
+};
+
 module.exports = {
   TASK_PRIORITY,
   TASK_STATUS,
+  TASK_ATTACHMENT_MEDIA_TYPE,
 };

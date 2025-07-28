@@ -9,6 +9,7 @@ const {
 const { Promise } = require("bluebird");
 const { getTeamUserRole } = require("../utils/teamsUtil");
 const { SQL_ERRORS } = require("../constants/sqlConstants");
+const pool = require("../../configs/dbConfig");
 
 const getTeam = async (req, res) => {
   try {
@@ -65,24 +66,27 @@ const getAllTeams = async (req, res) => {
 
 const addTeam = async (req, res) => {
   try {
+    await pool.query("BEGIN");
     const team = await teamsService.createTeam({
       ...pick(req.body, ["name", "about"]),
       owner: req.user.id,
     });
     if (!team)
       res.status(200).json({ success: true, message: "Team already exists" });
-    await createTeamUser({
+    await teamUsersService.createTeamUser({
       userId: req.user.id,
       teamId: team.id,
       role: TEAM_USER_ROLE.OWNER,
       status: TEAM_USER_STATUS.ACTIVE,
     });
+    await pool.query("COMMIT");
     res.status(201).json({
       success: true,
       message: "Team created",
       data: team,
     });
   } catch (error) {
+    await pool.query("ROLLBACK");
     console.error("Error in TeamsController.addTeam - ", error);
     res.status(400).json({
       success: false,
