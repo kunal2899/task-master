@@ -137,10 +137,28 @@ const changePassword = async (req, res) => {
   }
 };
 
+const logoutUser = async (req, res) => {
+  try {
+    // In this case, we don't have any session management,
+    // so logout is just a matter of client-side token deletion
+    res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
+  } catch (error) {
+    console.error("Error in UsersController.logoutUser - ", error);
+    res.status(400).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+}
+
 module.exports = {
   loginUser,
   registerUser,
   getMyUser,
   updateMyUser,
   changePassword,
+  logoutUser,
 };

@@ -7,6 +7,7 @@ const {
   getMyUser,
   updateMyUser,
   changePassword,
+  logoutUser,
 } = require("../controllers/usersController");
 const validateLoginInfo = require("../middlewares/validators/loginUserValidator");
 const validateRegisterUserInfo = require("../middlewares/validators/registerUserValidator");
@@ -22,6 +23,7 @@ router.put(
 );
 router.get("/me", isAuthenticated, getMyUser);
 router.put("/me", isAuthenticated, validateUpdateUserInfo, updateMyUser);
+router.post("/me/logout", isAuthenticated, logoutUser);
 
 router.post("/login", validateLoginInfo, loginUser);
 router.post("/", validateRegisterUserInfo, registerUser);
